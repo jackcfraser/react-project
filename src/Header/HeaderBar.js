@@ -5,8 +5,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import HomeIcon from '@material-ui/icons/Home';
-import WorkIcon from '@material-ui/icons/Work';
 import MapIcon from '@material-ui/icons/Map';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Drawer } from '@material-ui/core';
@@ -35,7 +33,9 @@ class Header extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			open: false
+			open: false,
+			href: window.location.href,
+			title: this.determineTitle(window.location.href)
 		}
 	}
 
@@ -47,6 +47,34 @@ class Header extends React.Component {
 			open: open
 		});
 	};
+
+	componentDidUpdate(){
+		if(this.state.href !== window.location.href){
+			this.setState({
+				href: window.location.href,
+				title: this.determineTitle(window.location.href)
+			});
+		}
+	}
+
+	determineTitle(href){
+		var windowTitle;
+		switch(href){
+			case 'http://localhost:3000/':
+				windowTitle = 'Home';
+			break;
+			case 'http://localhost:3000/Stocks':
+				windowTitle = 'Stocks Project';
+			break;
+			case 'http://localhost:3000/Map':
+				windowTitle = 'Leaflet Project';
+			break;
+			default:
+				windowTitle = '???';
+			break;
+		}
+		return windowTitle;
+	}
 
 	render() {
 		const { classes } = this.props;
@@ -87,12 +115,11 @@ class Header extends React.Component {
 								<MenuIcon />
 							</IconButton>
 							<Typography variant="h6" className={classes.title}>
-								Home
+								{this.state.title}
             				</Typography>
 						</Toolbar>
 					</AppBar>
 				</div>
-				{/* <Route path="/App" component={App} /> */}
 				<Route exact path="/" component={Welcome} />
 				<Route path="/Stocks" component={Stocks} />
 				<Route path="/Map" component={LeafletMap} />

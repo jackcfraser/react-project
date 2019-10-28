@@ -30,6 +30,8 @@ const DrawerButtonBox = styled(Box)`
     z-index: 2;
 `;
 
+
+
 class LeafletMap extends React.Component {
     constructor(props) {
         super(props);
@@ -38,17 +40,40 @@ class LeafletMap extends React.Component {
         }
     }
 
+    toggleDrawer = (open) => event => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+        this.setState({
+            open: open
+        });
+    };
+
+
     render() {
-        const position = [-23.3200495, 150.5276997]
+        const position = [-23.3200495, 150.5276997];
+
+        const options = (
+            <List>
+                <ListItem button key="Home">
+                    <ListItemIcon><AppsIcon /></ListItemIcon>
+                    <ListItemText primary="Home" />
+                </ListItem>
+            </List>
+        );
+
 
         return (
             <MapBox>
+                <Drawer open={this.state.open} onClose={this.toggleDrawer(false)} anchor="right">
+                    {options}
+                </Drawer>
                 <SearchBox>
                     <GeoSearch />
                 </SearchBox>
                 <DrawerButtonBox>
                     <Tooltip title="Show/Hide List" placement="left">
-                        <Fab color="secondary" size="small">
+                        <Fab color="secondary" size="small" onClick={this.toggleDrawer(true)} onKeyDown={this.toggleDrawer(true)}>
                             <AppsIcon />
                         </Fab>
                     </Tooltip>
