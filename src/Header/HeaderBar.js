@@ -7,12 +7,14 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import WorkIcon from '@material-ui/icons/Work';
+import MapIcon from '@material-ui/icons/Map';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Drawer } from '@material-ui/core';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import Stocks from '../Stocks';
-import Welcome from '../Welcome'
+import Welcome from '../Welcome';
+import LeafletMap from '../LeafletMap/LeafletMap';
 
 const styles = theme => ({
 	root: {
@@ -36,7 +38,7 @@ class Header extends React.Component {
 			open: false
 		}
 	}
-	
+
 	toggleDrawer = (open) => event => {
 		if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
 			return;
@@ -63,10 +65,12 @@ class Header extends React.Component {
 							<ListItemText primary="Stocks Project" />
 						</ListItem>
 					</Link>
-					<ListItem button key="My Work">
-						<ListItemIcon><WorkIcon /></ListItemIcon>
-						<ListItemText primary="My Work" />
-					</ListItem>
+					<Link to="/Map">
+						<ListItem button key="Leaflet Project">
+							<ListItemIcon><MapIcon /></ListItemIcon>
+							<ListItemText primary="Leaflet Project" />
+						</ListItem>
+					</Link>
 				</List>
 			</div>
 		);
@@ -91,6 +95,7 @@ class Header extends React.Component {
 				{/* <Route path="/App" component={App} /> */}
 				<Route exact path="/" component={Welcome} />
 				<Route path="/Stocks" component={Stocks} />
+				<Route path="/Map" component={LeafletMap} />
 			</Router>
 		);
 	}

@@ -5,8 +5,8 @@ import 'typeface-roboto';
 import StockChart from './Chart/StockChart';
 import { Container, Grid, Paper, FormGroup, FormControlLabel, Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import StockSearch from './Component/StockSearch';
-import IntervalDropdown from './Component/IntervalDropdown';
+import StockSearch from './Chart/StockSearch';
+import IntervalDropdown from './Chart/IntervalDropdown';
 import 'typeface-roboto';
 
 const theme = createMuiTheme({
