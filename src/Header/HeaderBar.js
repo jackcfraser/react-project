@@ -59,6 +59,7 @@ class Header extends React.Component {
 
 	determineTitle(href){
 		var windowTitle;
+		// This is really bad. Needs fixing to dynamically look at the URL.
 		switch(href){
 			case 'http://localhost:3000/':
 				windowTitle = 'Home';
