@@ -4,7 +4,9 @@ import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import AppsIcon from '@material-ui/icons/Apps';
 import styled from 'styled-components';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Map, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import './map.css';
 
 import GeoSearch from './GeoSearch';
@@ -38,6 +40,14 @@ class LeafletMap extends React.Component {
         this.state = {
             open: false
         }
+
+        delete L.Icon.Default.prototype._getIconUrl;
+
+        L.Icon.Default.mergeOptions({
+            iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+            iconUrl: require('leaflet/dist/images/marker-icon.png'),
+            shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+        });
     }
 
     toggleDrawer = (open) => event => {
@@ -93,9 +103,10 @@ class LeafletMap extends React.Component {
                     <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
                     <Marker position={position}>
                         <Popup>
-                            Popup for any custom information.
+                            My marker
                         </Popup>
                     </Marker>
+                    <Circle center={position} fillColor="blue" radius={200} />
 
                 </Map>
 
