@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Paper, Grid, Typography, Box } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import './App.css';
 
