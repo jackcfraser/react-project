@@ -67,13 +67,12 @@ class LeafletMap extends React.Component {
     onCSVReady(result) {
         var unique = [];
         for (var obj in result.data) {
-            if(!unique.includes(result.data[obj]['obs_type'])){
+            if (!unique.includes(result.data[obj]['obs_type'])) {
                 unique.push(result.data[obj]['obs_type']);
             }
+            // if(result.data[obj]['obs_type'] == 'LON' || result.data[obj]['obs_type'] == 'SQM')
+            heatmapData.push({ x: result.data[obj]['lat'], y: result.data[obj]['lon'], z: result.data[obj]['nelm'] });
 
-            if(result.data[obj]['obs_type'] == 'DSM')
-                heatmapData.push({x: result.data[obj]['lat'], y: result.data[obj]['lon'], z: result.data[obj]['sqm_value']});
-            
         }
 
         console.log(unique);
@@ -143,15 +142,13 @@ class LeafletMap extends React.Component {
                     />
 
                     <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
+                    {/* https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png */}
+                    {/* https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format} */}
                     {/* <Marker position={position}>
                         <Popup>
                             My marker
                         </Popup>
                     </Marker> */}
-
-                    {/* {heatmapData.map((value, index) => {
-                        return <Marker position={[value['x'], value['y']]}/>
-                    })} */}
 
                     {/* <Circle center={position} fillColor="blue" radius={200} /> */}
 
