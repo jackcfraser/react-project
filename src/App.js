@@ -1,12 +1,7 @@
 import React from 'react';
 import Header from './Header/HeaderBar';
-import { Grid } from '@material-ui/core';
-
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-
-import styled from 'styled-components';
-
 import 'typeface-roboto';
 import './App.css';
 
@@ -18,11 +13,9 @@ const theme = createMuiTheme({
 });
 
 class App extends React.Component {
-  constructor() {
-    super();
-  }
 
   render() {
+    console.log(process.env);
     return (
       <ThemeProvider theme={theme}>
         <div id="root">

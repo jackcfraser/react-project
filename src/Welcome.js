@@ -9,10 +9,6 @@ const GridContainer = styled(Grid)`
 `;
 
 class Welcome extends React.Component {
-    constructor() {
-        super();
-    }
-
     render() {
         return (
             <GridContainer container justify="center" alignItems="center" direction="column">
