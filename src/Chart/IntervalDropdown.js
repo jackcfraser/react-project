@@ -15,10 +15,6 @@ const suggestions = [
 ];
 
 class IntervalDropdown extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     handleChange = selectValue => {
         this.props.onValueChange(selectValue);
     }
