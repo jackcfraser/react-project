@@ -3,7 +3,7 @@ import { Box, Drawer, Fab, Tooltip } from '@material-ui/core';
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
 import styled from 'styled-components';
-import { Map, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
+import { Map, TileLayer } from 'react-leaflet';
 import HeatMapLayer from 'react-leaflet-heatmap-layer';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -40,7 +40,8 @@ class LeafletMap extends React.Component {
         super(props);
         this.state = {
             open: false,
-            heatmapData: DataHelper.getLightData()
+            heatmapData: DataHelper.getLightData(),
+            isLoaded: false
         }
 
         delete L.Icon.Default.prototype._getIconUrl;
@@ -50,6 +51,14 @@ class LeafletMap extends React.Component {
             iconUrl: require('leaflet/dist/images/marker-icon.png'),
             shadowUrl: require('leaflet/dist/images/marker-shadow.png')
         });
+    }
+
+    componentDidMount() {
+        DataHelper.getLightData().then(
+            (result) => {this.setState({isLoaded: true, heatmapData: result});},
+            //TODO implement error handling
+            (error) => {this.setState({isLoaded: false});}
+        )
     }
 
     toggleDrawer = (open) => event => {
@@ -73,11 +82,6 @@ class LeafletMap extends React.Component {
             </List>
         );
 
-        console.log(this.state.heatmapData);
-
-        if(this.state.heatmapData == undefined){
-            return null;
-        } else
         return (
             <MapBox>
                 <Drawer open={this.state.open} onClose={this.toggleDrawer(false)} anchor="right">
@@ -105,15 +109,15 @@ class LeafletMap extends React.Component {
                     animate={true}
                     easeLinearity={0.35}
                 >
-
-                    {this.state.heatmapData == undefined ? null : <HeatMapLayer
+                    {this.state.isLoaded === true ? <HeatMapLayer
                         fitsBoundsOnLoad
                         fitsBoundsOnUpdate
                         points={this.state.heatmapData}
                         longitudeExtractor={m => m['y']}
                         latitudeExtractor={m => m['x']}
                         intensityExtractor={m => parseFloat(m['z'])}
-                    />}
+                    /> : null}
+                    
 
 
                     <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
