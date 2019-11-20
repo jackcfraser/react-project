@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import styled from 'styled-components';
+import DataHelper from '../Helpers/DataHelper';
 
 const StyledSelect = styled(Select)`
     width: 350px;
@@ -20,7 +21,12 @@ class GeoSearch extends React.Component {
     }
 
     keyDown = event => {
-        //todo
+        if (event.key === "Enter") {
+            DataHelper.getLocationSearchData().then(
+                (result) => {console.log(result)},
+                (error) => {console.log(error)}
+            )
+        }
     }
 
     render() {

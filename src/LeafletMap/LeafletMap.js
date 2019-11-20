@@ -8,8 +8,7 @@ import HeatMapLayer from 'react-leaflet-heatmap-layer';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './map.css';
-import DataHelper from '../Helpers/DataHelper.js';
-
+import { getLightData, getLocationSearchData } from '../Helpers/DataHelper.js';
 import GeoSearch from './GeoSearch';
 
 const MapBox = styled(Box)`
@@ -40,7 +39,7 @@ class LeafletMap extends React.Component {
         super(props);
         this.state = {
             open: false,
-            heatmapData: DataHelper.getLightData(),
+            heatmapData: [],
             isLoaded: false
         }
 
@@ -54,10 +53,10 @@ class LeafletMap extends React.Component {
     }
 
     componentDidMount() {
-        DataHelper.getLightData().then(
-            (result) => {this.setState({isLoaded: true, heatmapData: result});},
+        getLightData().then(
+            (result) => { this.setState({ isLoaded: true, heatmapData: result }); },
             //TODO implement error handling
-            (error) => {this.setState({isLoaded: false});}
+            (error) => { this.setState({ isLoaded: false }); }
         )
     }
 
@@ -117,7 +116,7 @@ class LeafletMap extends React.Component {
                         latitudeExtractor={m => m['x']}
                         intensityExtractor={m => parseFloat(m['z'])}
                     /> : null}
-                    
+
 
 
                     <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
